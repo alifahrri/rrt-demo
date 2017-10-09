@@ -29,7 +29,10 @@ SOURCES += main.cpp\
     kdtree.cpp \
     rrt.cpp \
     rrtitem.cpp \
-    graphicsview.cpp
+    graphicsview.cpp \
+    src/polygon.cpp \
+    src/line.cpp \
+    src/polygonitem.cpp
 
 HEADERS  += mainwindow.h \
     kdtree.h \
@@ -37,6 +40,9 @@ HEADERS  += mainwindow.h \
     pointcloud.h \
     include/nanoflann.hpp \
     rrtitem.h \
-    graphicsview.h
+    graphicsview.h \
+    include/polygon.h \
+    include/line.h \
+    include/polygonitem.h
 
 FORMS    += mainwindow.ui

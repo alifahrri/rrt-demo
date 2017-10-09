@@ -9,6 +9,7 @@ class MainWindow;
 
 class RRT;
 class RRTItem;
+class PolygonsItem;
 
 class MainWindow : public QMainWindow
 {
@@ -22,6 +23,7 @@ private:
     Ui::MainWindow *ui;
     RRT& rrt_;
     RRTItem *rrt_item;
+    PolygonsItem *polygon_item;
 };
 
 #endif // MAINWINDOW_H

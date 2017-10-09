@@ -1,6 +1,7 @@
 #include "rrtitem.h"
 #include "rrt.h"
 #include <QPainter>
+#include <QGraphicsScene>
 
 #define MAX(A,B) (A>B?A:B)
 
@@ -28,6 +29,7 @@ void RRTItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
     painter->setPen(QColor(color_select,0,color_select));
     painter->setBrush(QColor(color_select,0,color_select,127));
 
+
     for(size_t i=0; i<rrt_.size(); i++)
     {
         auto x = points[i].x;
@@ -47,10 +49,12 @@ void RRTItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
     }
 //    painter->setPen(QColor(0,0,0,127));
     painter->drawLines(lines);
+    painter->setPen(Qt::blue);
+    painter->drawText(QPointF(scene()->sceneRect().topLeft()+QPointF(20,20)),QString::number(rrt_.getIteration()));
     bound_rect = QRectF(QPointF(min_x,min_y),QPointF(max_x,max_y));
 }
 
 QRectF RRTItem::boundingRect() const
 {
-
+    return bound_rect;
 }
