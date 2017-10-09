@@ -34,9 +34,6 @@ void RRT::clear()
 {
     parent_map.clear();
     child_map.clear();
-//    (*index) = KDTreeIndex(3, cloud, KDTreeSingleIndexAdaptorParams());
-//    for(size_t i=0; i<cloud.pts.size(); i++)
-//        index->removePoint(i);
     cloud.pts.clear();
     delete index;
     index = new KDTreeIndex(3, cloud, KDTreeSingleIndexAdaptorParams());
