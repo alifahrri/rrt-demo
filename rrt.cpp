@@ -30,6 +30,21 @@ void RRT::grow(size_t N)
     }
 }
 
+void RRT::clear()
+{
+    parent_map.clear();
+    child_map.clear();
+//    (*index) = KDTreeIndex(3, cloud, KDTreeSingleIndexAdaptorParams());
+//    for(size_t i=0; i<cloud.pts.size(); i++)
+//        index->removePoint(i);
+    cloud.pts.clear();
+    delete index;
+    index = new KDTreeIndex(3, cloud, KDTreeSingleIndexAdaptorParams());
+    addPoint({0.0,0.0,0.0});
+    parent_map.push_back(-1);
+    child_map.push_back({});
+}
+
 void RRT::addEdge(const Point<double> &new_point, size_t nearest_idx)
 {
     size_t parent_idx = nearest_idx;
@@ -44,14 +59,10 @@ void RRT::addEdge(const Point<double> &new_point, size_t nearest_idx)
     //if nearest has parent
     if(parent_map[nearest_idx]>=0)
     {
-        auto dx = (nearest_pt.x - parent.x);
-        auto dy = (nearest_pt.y - parent.y);
-        auto dz = (nearest_pt.z - parent.z);
-        auto length = sqrt(dx*dx+dy*dy+dz*dz);
         auto l = 0.0;
-        dx *= 1.0/length;
-        dy *= 1.0/length;
-        dz *= 1.0/length;
+        double dx, dy, dz;
+        double length;
+        unitVector(dx,dy,dz,nearest_pt,parent,&length);
         while(l<length)
         {
             auto current_point = Point<double>({parent.x+l*dx,parent.y+l*dy,parent.z+l*dz});
@@ -72,14 +83,10 @@ void RRT::addEdge(const Point<double> &new_point, size_t nearest_idx)
     for(size_t i=0; i<child_map[nearest_idx].size(); i++)
     {
         const auto& child = cloud.pts[child_map[nearest_idx][i]];
-        auto dx = (nearest_pt.x - child.x);
-        auto dy = (nearest_pt.y - child.y);
-        auto dz = (nearest_pt.z - child.z);
-        auto length = sqrt(dx*dx+dy*dy+dz*dz);
         auto l = 0.0;
-        dx *= 1.0/length;
-        dy *= 1.0/length;
-        dz *= 1.0/length;
+        double dx, dy, dz;
+        double length;
+        unitVector(dx,dy,dz,nearest_pt,child,&length);
         while(l<length)
         {
             auto current_point = Point<double>({child.x+l*dx,child.y+l*dy,child.z+l*dz});
@@ -102,10 +109,6 @@ void RRT::addEdge(const Point<double> &new_point, size_t nearest_idx)
     {
         parent_idx = cloud.pts.size();
         insertPoint(*insert_point,insert_point_parent,insert_point_child);
-//        if(insert_assign==0)
-//            insertPoint(*insert_point,parent_map[nearest_idx],nearest_idx);
-//        else
-//            insertPoint(*insert_point,insert_point_parent,insert_point_child);
         delete insert_point;
     }
     parent_map.push_back(parent_idx);
@@ -114,6 +117,7 @@ void RRT::addEdge(const Point<double> &new_point, size_t nearest_idx)
     child_map.push_back({});
 }
 
+inline
 double RRT::L2Distance(const Point<double> &p1, const Point<double> &p2)
 {
     auto dx = p1.x - p2.x;
@@ -122,6 +126,7 @@ double RRT::L2Distance(const Point<double> &p1, const Point<double> &p2)
     return sqrt(dx*dx+dy*dy+dz*dz);
 }
 
+inline
 void RRT::insertPoint(const Point<double> &p, int parent)
 {
     cloud.pts.push_back(p);
@@ -131,6 +136,7 @@ void RRT::insertPoint(const Point<double> &p, int parent)
 }
 
 //insert point p, swap child & parent
+inline
 void RRT::insertPoint(const Point<double> &p, int parent, int child)
 {
     cloud.pts.push_back(p);
@@ -145,3 +151,16 @@ void RRT::insertPoint(const Point<double> &p, int parent, int child)
     child_map.push_back({child});
 }
 
+inline
+void RRT::unitVector(double &ux, double &uy, double &uz, const Point<double> &p1, const Point<double> &p2, double* l)
+{
+    auto dx = (p1.x - p2.x);
+    auto dy = (p1.y - p2.y);
+    auto dz = (p1.z - p2.z);
+    auto length = sqrt(dx*dx+dy*dy+dz*dz);
+    ux = dx/length;
+    uy = dy/length;
+    uz = dz/length;
+    if(l)
+        *l=length;
+}

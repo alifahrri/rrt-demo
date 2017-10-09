@@ -25,8 +25,8 @@ void RRTItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
     static int color_select = 0;
     color_select++;
     color_select = color_select%10;
-    painter->setPen(QColor(color_select,0,color_select,127));
-    painter->setBrush(QColor(color_select,0,color_select));
+    painter->setPen(QColor(color_select,0,color_select));
+    painter->setBrush(QColor(color_select,0,color_select,127));
 
     for(size_t i=0; i<rrt_.size(); i++)
     {
@@ -42,7 +42,7 @@ void RRTItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
             min_y = y;
         else if(y>max_y)
             max_y = y;
-        painter->drawEllipse(QPointF(x,y),1.3,1.3);
+        painter->drawEllipse(QPointF(x,y),1.0,1.0);
         lines.push_back(QLineF(QPointF(x,y),QPointF(px,py)));
     }
 //    painter->setPen(QColor(0,0,0,127));

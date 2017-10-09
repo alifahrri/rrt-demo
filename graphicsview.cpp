@@ -8,9 +8,11 @@ GraphicsView::GraphicsView(QWidget *parent)
 
 void GraphicsView::keyPressEvent(QKeyEvent *event)
 {
-    if(event->key()==Qt::Key_Space)
+    if(callback)
     {
-        if(callback)
-            callback(50);
+        if(event->key()==Qt::Key_Space)
+            callback(1);
+        else if(event->key()==Qt::Key_C)
+            callback(-1);
     }
 }

@@ -8,6 +8,7 @@ using namespace nanoflann;
 
 class KDTree
 {
+protected:
     typedef KDTreeSingleIndexDynamicAdaptor<
             L2_Simple_Adaptor<double,PointCloud<double>>,
             PointCloud<double>,3>

@@ -12,6 +12,7 @@ class RRT : public KDTree
 public:
     RRT();
     void grow(size_t N);
+    void clear();
     const vector<Point<double>>& getPoints() { return cloud.pts; }
     const vector<int>& getParentMap() { return parent_map; }
     const vector<vector<int>>& getChildMap() { return child_map; }
@@ -20,6 +21,8 @@ private:
     double L2Distance(const Point<double>& p1, const Point<double>& p2);
     void insertPoint(const Point<double>& p, int parent);
     void insertPoint(const Point<double> &p, int parent, int child);
+    void unitVector(double& ux, double& uy, double& uz,
+                    const Point<double>& p1, const Point<double> &p2, double *l=nullptr);
 private:
     vector<int> parent_map;
     vector<vector<int>> child_map;

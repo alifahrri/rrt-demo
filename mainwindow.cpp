@@ -18,9 +18,13 @@ MainWindow::MainWindow(RRT& rrt, QWidget *parent) :
     ui->graphicsView->setRenderHints(QPainter::Antialiasing | QPainter::HighQualityAntialiasing);
     ui->graphicsView->callback = [=](int n)
     {
-        rrt_.grow(n);
+        if(n>0)
+            rrt_.grow(n);
+        else
+            rrt_.clear();
         ui->graphicsView->scene()->update();
     };
+    setWindowTitle("RRT Test");
 }
 
 MainWindow::~MainWindow()
