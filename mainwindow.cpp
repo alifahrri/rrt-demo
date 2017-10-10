@@ -38,7 +38,6 @@ MainWindow::MainWindow(RRT& rrt, QWidget *parent) :
             for(const auto& p : pts)
                 points.push_back(Line::Point(p.x(),p.y()));
             rrt_.addObstacles({Polygon(points)});
-            qDebug() << pts;
         }
         else
             rrt_.clearObstacles();

@@ -18,6 +18,7 @@ private:
 public:
     Callback callback = nullptr;
     MouseCallback mouse_callback = nullptr;
+    QVector<QGraphicsEllipseItem*> pts_ptr;
 };
 
 #endif // GRAPHICSVIEW_H

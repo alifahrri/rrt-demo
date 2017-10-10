@@ -28,11 +28,21 @@ void GraphicsView::mousePressEvent(QMouseEvent *event)
         case Qt::LeftButton:
             switch (event->modifiers()) {
             case Qt::ShiftModifier:
-                pts.push_back(mapToScene(event->pos()));
+            {
+                auto pt = mapToScene(event->pos());
+                pts.push_back(pt);
+                auto ptr = scene()->addEllipse(pt.x()-5,pt.y()-5,10,10);
+                pts_ptr.push_back(ptr);
                 break;
+            }
             default:
                 if(pts.size()>=3)
+                {
                     mouse_callback(1,pts);
+                }
+                for(auto ptr : pts_ptr)
+                    scene()->removeItem((QGraphicsItem*)ptr);
+                pts_ptr.clear();
                 pts.clear();
                 break;
             }
