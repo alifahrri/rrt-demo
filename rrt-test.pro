@@ -24,25 +24,28 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 INCLUDEPATH += include
 
-SOURCES += main.cpp\
-        mainwindow.cpp \
-    kdtree.cpp \
-    rrt.cpp \
-    rrtitem.cpp \
-    graphicsview.cpp \
-    src/polygon.cpp \
+SOURCES += main.cpp \
+    gui/graphicsview.cpp \
+    gui/mainwindow.cpp \
+    gui/polygonitem.cpp \
+    gui/rrtitem.cpp \
+    src/kdtree.cpp \
     src/line.cpp \
-    src/polygonitem.cpp
+    src/polygon.cpp \
+    src/rrt.cpp
 
-HEADERS  += mainwindow.h \
-    kdtree.h \
-    rrt.h \
-    pointcloud.h \
-    include/nanoflann.hpp \
-    rrtitem.h \
-    graphicsview.h \
-    include/polygon.h \
+
+
+FORMS    += gui/mainwindow.ui
+
+HEADERS += \
+    3rdparty/nanoflann.hpp \
+    gui/graphicsview.h \
+    gui/mainwindow.h \
+    gui/polygonitem.h \
+    gui/rrtitem.h \
+    include/kdtree.h \
     include/line.h \
-    include/polygonitem.h
-
-FORMS    += mainwindow.ui
+    include/pointcloud.h \
+    include/polygon.h \
+    include/rrt.h
