@@ -3,7 +3,8 @@ RRT Demo
 
 This project shows an implementation of RRT Algorithm
 
-## Demo Video :
+## Demo :
+![gif_demo](rrt_demo1.gif)
 [![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/W3FcGNcoUzw/0.jpg)](https://youtu.be/W3FcGNcoUzw)
 
 shift + click to add polygon's point :
